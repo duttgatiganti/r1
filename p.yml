@@ -1,0 +1,48 @@
+---
+- name: pb1
+  hosts: n
+  gather_facts: yes
+  become: true
+  vars_prompt:
+    - name: p1
+      prompt: "specify package"
+      private: no
+  vars_files:
+    - /root/vf.yml
+  vars: 
+    v1: apache2
+    v2: openjdk-11-jdk
+  tasks:
+    - name: install nginx
+      apt:
+        name: '{{ v1 }}'
+        state: present
+      tags: a
+      when: ansible_facts['os_family'] == 'ubuntu'
+      delegate_to: 172.31.5.225
+    - name: java
+      apt:
+        name: '{{ v2 }}'
+        update-cache: yes
+        state: present
+      tags: b
+    - name: apache2
+      apt:
+        name:
+          -  apache2
+          -  nginx
+        state: present
+    - name: direct
+      file:
+        path: /tmp/pbd1
+        state: directory
+    - name: importtasks
+      import_tasks: p2.yml
+    - name: copy
+      copy:
+        src: '{{ item }}'
+        dest: /tmp/
+      with_items:
+        - /tmp/c1.txt
+        - /tmp/c2.txt
+

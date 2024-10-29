@@ -1,0 +1,4 @@
+---
+# vars file for r1
+apache_package: apache2
+apache_daemon: apache2

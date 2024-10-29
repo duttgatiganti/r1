@@ -1,0 +1,6 @@
+---
+- name: role
+  hosts: n
+  become: yes
+  roles:
+    - role: r2

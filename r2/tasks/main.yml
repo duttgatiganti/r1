@@ -1,0 +1,9 @@
+---
+# tasks file for rr
+- name: Install-nginx
+  apt:
+    name: nginx
+    update_cache: yes
+    state: present
+  notify:
+  - start-nginx

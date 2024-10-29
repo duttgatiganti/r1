@@ -1,0 +1,6 @@
+---
+# handlers file for r2
+- name: start-nginx
+  service:
+    name: nginx
+    state: started
